@@ -13,4 +13,16 @@
 
   
     
-  
+
+
+
+- hosts: all
+  become: true
+  tasks:
+  - name: add a file in a location set user & group permission
+    ansible.builtin.file:
+      path: /tmp/web.txt
+      state: touch
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: "0744"

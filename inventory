@@ -1,0 +1,6 @@
+#sample ansible inventory file  
+  [hosts]
+
+stapp01     ansible_connection=ssh   ansible_user=tony    ansible_password=Ir0nM@n
+stapp02     ansible_connection=ssh   ansible_user=steve   ansible_password=Am3ric@
+stapp03     ansible_connection=ssh   ansible_user=banner  ansible_password=BigGr33n
