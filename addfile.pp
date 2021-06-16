@@ -6,7 +6,7 @@ class file_modifier {
 
      ensure => 'present',
 
-     content => 'Welcome to xFusionCorp Industries!',
+     content => 'Welcome to Here!',
 
      mode => '0777',
 
@@ -14,7 +14,7 @@ class file_modifier {
 
  }
 
- node 'stapp02.stratos.xfusioncorp.com' {
+ node 'app02.hostname.com' {
 
    include file_modifier
 

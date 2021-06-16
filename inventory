@@ -2,5 +2,5 @@
   [hosts]
 
 stapp01     ansible_connection=ssh   ansible_user=$username    ansible_password=$password
-stapp02     ansible_connection=ssh   ansible_user=steve   ansible_password=$password
-stapp03     ansible_connection=ssh   ansible_user=banner  ansible_password=$password
+stapp02     ansible_connection=ssh   ansible_user=$username   ansible_password=$password
+stapp03     ansible_connection=ssh   ansible_user=$username  ansible_password=$password

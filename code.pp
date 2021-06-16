@@ -1,6 +1,6 @@
 class { 'firewalld': }
 
-node 'stapp01.stratos.xfusioncorp.com' {
+node 'app01.hostname.com' {
 
   include firewall_node1
 
@@ -8,7 +8,7 @@ node 'stapp01.stratos.xfusioncorp.com' {
 
 
 
-node 'stapp02.stratos.xfusioncorp.com' {
+node 'app02.hostname.com' {
 
   include firewall_node2
 
@@ -16,7 +16,7 @@ node 'stapp02.stratos.xfusioncorp.com' {
 
 
 
-node 'stapp03.stratos.xfusioncorp.com' {
+node 'app03.hostname.com' {
 
   include firewall_node3
 
