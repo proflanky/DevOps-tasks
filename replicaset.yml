@@ -28,20 +28,3 @@ strategy:
     maxSurge: 1
     maxUnavailable: 2
 
-Create a namespace datacenter. 
-Create a deployment called httpd-deploy under this new namespace, It should have one container called httpd, use httpd:2.4.25 image and 6 replicas. The deployment should use RollingUpdate strategy with maxSurge=1, and maxUnavailable=2.
-
-Next upgrade the deployment to version httpd:2.4.43 using a rolling update.
-
-Finally, once all pods are updated undo the update and roll back to the previous/original version.
-
-kubectl create namespace nautilus
-kubectl create -f deployment.yml --namespace=nautilus
-
-kubectl config set-context --current --namespace=nautilus
-
-kubectl set image deployment/httpd-deploy httpd=httpd:2.4.43 --record --namespace=nautilus
-
-kubectl rollout status deployment/httpd-deploy --namespace=nautilus
-
-kubectl rollout undo deployment.v1.apps/httpd-deploy --to-revision=2 --namespace=nautilus
