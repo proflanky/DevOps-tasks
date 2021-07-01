@@ -79,3 +79,43 @@
       owner: banner
       group: banner
       state: link
+
+
+
+
+# Copy blog.txt file present under /usr/src/devops directory on jump host to App Server 1 under /opt/devops directory. Its user and group owner must be user tony and its permissions must be 0755 .
+
+# Copy story.txt file present under /usr/src/devops directory on jump host to App Server 2 under /opt/devops directory. Its user and group owner must be user steve and its permissions must be 0755 .
+
+# Copy media.txt file present under /usr/src/devops directory on jump host to App Server 3 under /opt/devops directory. Its user and group owner must be user banner and its permissions must be 0755 .
+
+- hosts: all
+  become: true
+  tasks:
+  - name: copy a file to a location set user & group permission
+    ansible.builtin.copy:
+      src: /usr/src/sysops/blog.txt
+      dest: /opt/sysops
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: "0777"
+    when: inventory_hostname == "stapp01"
+  - name: copy a file to a location set user & group permission
+    ansible.builtin.copy:
+      src: /usr/src/sysops/story.txt
+      dest: /opt/sysops
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: "0777"
+    when: inventory_hostname == "stapp02"
+  - name: copy a file to a location set user & group permission
+    ansible.builtin.copy:
+      src: /usr/src/sysops/media.txt
+      dest: /opt/sysops
+      owner: "{{ ansible_user }}"
+      group: "{{ ansible_user }}"
+      mode: "0777"
+    when: inventory_hostname == "stapp03"  
+
+# To verify
+ansible all -a "ls -ltr /opt/sysops" -i inventory
