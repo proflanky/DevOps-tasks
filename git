@@ -1,0 +1,31 @@
+a. Install git, set up any values for user.email and user.name globally and create a bare repository /opt/apps.git.
+
+b. There is an update hook (to block direct pushes to master branch) under /tmp on storage server itself; use the same to block direct pushes to master branch in /opt/apps.git repo.
+
+c. Clone /opt/apps.git repo in /usr/src/kodekloudrepos/apps directory.
+
+d. Create a new branch xfusioncorp_apps in repo that you cloned in /usr/src/kodekloudrepos.
+
+e. There is a readme.md file in /tmp on storage server itself; copy that to repo, add/commit in the new branch you created, and finally push your branch to origin.
+
+f. Also create master branch from your branch and remember you should not be able to push to master as per hook you have set up.
+
+
+yum install -y git
+git config --global --add user.name natasha
+git config --global --add user.email natasha@stratos.xfusioncorp.com
+git init --bare /opt/app.git
+
+cd /opt/
+cp /tmp/update  hooks/
+
+cd /usr/src/kodekloudrepos/
+git clone  /opt/app.git
+
+cd /usr/src/kodekloudrepos/apps
+git checkout -b xfusioncorp_apps
+
+cp /tmp/readme.md .
+git add readme.md
+git commit -m "Readme file"
+git push origin xfusioncorp_apps

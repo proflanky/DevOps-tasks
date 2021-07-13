@@ -7,5 +7,19 @@ services:
         - /opt/data:/usr/local/apache2/htdocs
         ports:
         - "8084:80"
+---
 
-
+version: '3.3'
+services:
+    web:
+        build: .
+        container_name: python
+        ports:
+            - "5000:5000"
+        volumes:
+            - .:/code
+        depends_on:
+            - redis
+    redis:
+        image: redis
+        container_name: redis

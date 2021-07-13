@@ -82,7 +82,7 @@
 
 
 
-
+#using ansible conditionals
 # Copy blog.txt file present under /usr/src/devops directory on jump host to App Server 1 under /opt/devops directory. Its user and group owner must be user tony and its permissions must be 0755 .
 
 # Copy story.txt file present under /usr/src/devops directory on jump host to App Server 2 under /opt/devops directory. Its user and group owner must be user steve and its permissions must be 0755 .
@@ -119,3 +119,41 @@
 
 # To verify
 ansible all -a "ls -ltr /opt/sysops" -i inventory
+
+
+
+# Install httpd and php packages (whatever default version is available in yum repo)
+# Change default document root of Apache to /var/www/html/myroot in default Apache config /etc/httpd/conf/httpd.conf. Make sure /var/www/html/myroot path exists (if not please create the same)
+
+- name: Setup Httpd and PHP
+  hosts: stapp02
+  become: yes
+  tasks:
+    - name: Install latest version of httpd and php
+      package:
+        name:
+          - httpd
+          - php
+        state: latest
+    - name: Replace default DocumentRoot in httpd.conf
+      replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: DocumentRoot \"\/var\/www\/html\"
+        replace: DocumentRoot "/var/www/html/myroot"
+    - name: Create the new DocumentRoot directory if it does not exist
+      file:
+        path: /var/www/html/myroot
+        state: directory
+        owner: apache
+        group: apache
+    - name: Use Jinja2 template to generate phpinfo.php
+      template:
+        src: /home/thor/playbooks/templates/phpinfo.php.j2
+        dest: /var/www/html/myroot/phpinfo.php
+        owner: apache
+        group: apache
+    - name: Start and enable service httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes 
