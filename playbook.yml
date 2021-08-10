@@ -157,3 +157,59 @@ ansible all -a "ls -ltr /opt/sysops" -i inventory
         name: httpd
         state: started
         enabled: yes 
+
+---
+- name: copy files to servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: copying the files
+      ansible.builtin.copy:
+        src: /usr/src/devops/index.html
+        dest: /opt/devops/index.html  # link to /path/to/file
+        follow: no
+
+
+- name: Ansible replace
+
+  hosts: all
+
+  become: yes
+
+  tasks:
+
+    - name: blog.txt replacement
+
+      replace:
+
+        path: /opt/data/blog.txt
+
+        regexp: "xFusionCorp"
+
+        replace: "Nautilus"
+
+      when: inventory_hostname == "stapp01"
+
+    - name: story.txt replacement
+
+      replace:
+
+        path: /opt/data/story.txt
+
+        regexp: "Nautilus"
+
+        replace: "KodeKloud"
+
+      when: inventory_hostname == "stapp02"
+
+    - name: media.txt replacement
+
+      replace:
+
+        path: /opt/data/media.txt
+
+        regexp: "KodeKloud"
+
+        replace: "xFusionCorp Industries"
+
+      when: inventory_hostname == "stapp03"
